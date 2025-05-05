@@ -1,5 +1,7 @@
 # Panel de Gestión de Tienda Online - TecnoMarket
 
+Esta aplicacion te permite ver los productos, clientes y pedidos que hay en la Tienda TecnoMarket
+
 ## Requisitos
 
 Tener Python instalado
