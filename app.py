@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from datetime import  date
+from datetime import date
 
 app = Flask(__name__)
 
@@ -10,10 +10,10 @@ def dashboard():
     fecha = date.today()
 
     productos = [
-        {"nombre": "Portátil Lenovo", "precio": 750.0, "stock": 5, "categoria": "Computadoras"},
-        {"nombre": "Ratón Logitech", "precio": 25.5, "stock": 0, "categoria": "Accesorios"},
+        {"nombre": "Portátil Lenovo", "precio": 750.00, "stock": 5, "categoria": "Computadoras"},
+        {"nombre": "Ratón Logitech", "precio": 25.50, "stock": 0, "categoria": "Accesorios"},
         {"nombre": "Monitor Samsung", "precio": 199.99, "stock": 3, "categoria": "Pantallas"},
-        {"nombre": "Teclado Mecánico", "precio": 45.0, "stock": 10, "categoria": "Accesorios"}
+        {"nombre": "Teclado Mecánico", "precio": 45.00, "stock": 10, "categoria": "Accesorios"}
     ]
     clientes = [
         {"nombre": "Ana Torres", "email": "ana@correo.com", "activo": True, "pedidos": 3},
@@ -21,9 +21,9 @@ def dashboard():
         {"nombre": "Marta López", "email": "marta@correo.com", "activo": True, "pedidos": 5}
     ]
     pedidos = [
-        {"cliente": "Ana Torres", "total": 120.0, "fecha": "2025-05-01"},
-        {"cliente": "Marta López", "total": 340.5, "fecha": "2025-05-03"},
-        {"cliente": "Luis Rivas", "total": 75.0, "fecha": "2025-05-04"}
+        {"cliente": "Ana Torres", "total": 120.00, "fecha": "2025-05-01"},
+        {"cliente": "Marta López", "total": 340.50, "fecha": "2025-05-03"},
+        {"cliente": "Luis Rivas", "total": 75.00, "fecha": "2025-05-04"}
     ]
 
     total_stock = 0

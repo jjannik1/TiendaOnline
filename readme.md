@@ -19,7 +19,13 @@ pip install -r requirements.txt
 
 ## Ejecucion
 
+En la carpeta del proyecto ejecutamos la aplicación.
+
 ```bash
 python app.py
 ```
+Y entrar en la pagina web de su host localmente desde:
 
+```bash
+ http://127.0.0.1:5000/dashboard
+```

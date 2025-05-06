@@ -1,8 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+    <meta name="descripcion" content="Pagina web de una tienda online">
+    <meta name="keywords" content="TecnoMarket">
     <meta charset="UTF-8">
     <title>Dashboard</title>
+<style>
+
+    h3 {
+        color: rgb(21, 117, 96);
+    }
+
+    ul {
+        list-style:square;
+
+    }
+
+    hr {
+  border: none;
+  height: 6px;
+  /* Set the hr color */
+  color: #333;  /* old IE */
+  background-color: #333;  /* Modern Browsers */
+}
+
+</style>
 </head>
 <body>
     <h1>Bienvenido, {{ nombre_admin }}!</h1>
@@ -15,8 +37,7 @@
     <ul>
         {% for producto in productos %}
             <li>
-                {{ producto.nombre }} - ${{ producto.precio }} -
-                {{ producto.categoria }} -
+                {{ producto.nombre }} - {{ producto.precio }}€ - {{ producto.categoria }} - 
                 {% if producto.stock == 0 %}
                     <strong>Agotado</strong>
                 {% else %}
@@ -55,7 +76,7 @@
             <li>{{ pedido.cliente }} - {{ pedido.total }}€ - {{ pedido.fecha }}</li>
         {% endfor %}
     </ul>
-    <p><strong>Total ingresado:</strong> ${{ total }}</p>
+    <p><strong>Total ingresado:</strong> {{ total }}€</p>
 
 
 
