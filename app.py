@@ -45,6 +45,17 @@ def dashboard():
     for pedido in pedidos:
         total += pedido["total"]
 
+    nombre = "nombre"
+    precio = "precio"
+    stock = "stock"
+    categoria = "categoria"
+
+    prod = []
+
+    
+
+
+
 
     return render_template("dashboard.html",nombre_admin=nombre_admin,tienda=tienda,fecha=fecha,productos=productos,clientes=clientes,pedidos=pedidos,total_stock=total_stock,clientes_activos=clientes_activos,cliente_pedido=cliente_pedido,total=total)
 

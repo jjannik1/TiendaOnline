@@ -78,6 +78,55 @@
     </ul>
     <p><strong>Total ingresado:</strong> {{ total }}€</p>
 
+    <hr>
+
+    <h3>Agregar productos</h3>
+
+    <form class="producto" method="post">
+        <label for="prod" class="form_label">Producto: </label>
+            <input type="text" name="product" id="prod">
+        <label for="precio" class="form_label">Precio: </label>
+            <input type="number" name="price" id="precio">
+        <label for="categ" class="form_label">Categoria: </label>
+            <input type="text" name="category" id="categ">
+        <label for="sto" class="form_label">Stock: </label>
+            <input type="number" name="stock" id="sto">
+        <button type="submit" class="form_submit">Enviar</button>
+    </form>
+
+    <hr>
+
+    <h3>Agregar clientes</h3>
+
+    <form class="cliente" method="post">
+        <label for="nom_cli" class="form_label">Cliente: </label>
+            <input type="text" name="clien" id="nom_cli">
+        <label for="correo" class="form_label">Correo:</label>
+            <input type="email" name="email" id="correo">
+        <label for="activ" class="form_label">¿Como está?</label>
+            <input type="radio" name="act" id="activ"> Activo
+            <input type="radio" name="act" id="activ"> Inactivo
+        <label for="ped" class="form_label">Pedidos: </label>
+            <input type="number" name="pedidos" id="ped">
+        <button type="submit" class="form_submit">Enviar</button>
+
+    </form>
+
+    <hr>
+
+    <h3>Agregar pedidos a clientes</h3>
+
+    <form class="pedid" method="post">
+        <label for="nombre_cliente" class="form_label">Cliente: </label>
+            <input type="text" name="nombr" id="nombre_cliente">
+        <label for="tot" class="form_label">Total: </label>
+            <input type="number" name="compra" id="tot">
+        <label for="fech" class="form_label">Fecha:</label>
+            <input type="date" name="dia" id="fech">
+        <button type="submit" class="form_submit">Enviar</button>
+
+    </form>
+
 
 
 
