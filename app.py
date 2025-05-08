@@ -28,57 +28,34 @@ def dashboard():
     tienda = "TecnoMarket"
     fecha = date.today()
 
-    
-
-
 
     clid = {}
     prod={}
     pedid = {}
     if request.method == "POST":
         formulario = request.form.get("tipo_formulario")
-        if formulario == "producto":
-            prod1 = request.form.get("product")
-            prod2 = request.form.get("price")
-            prod3 = request.form.get("category")
-            prod4 = request.form.get("stock")
+        if formulario == "form_prod":
             prod = {
-                "nombre": prod1,
-                "precio": float(prod2),
-                "stock": int(prod4),
-                "categoria": prod3
+                "nombre": request.form.get("product"),
+                "precio": float(request.form.get("price")),
+                "stock": int(request.form.get("stock")),
+                "categoria": request.form.get("category")
             }
             productos.append(prod)
-        elif formulario =="cliente":
-            cli1 = request.form.get("clien")
-            cli2 = request.form.get("email")
-            cli3 = request.form.get("act")
-            cli4 = request.form.get("pedidos")
-
-            if cli3 == "True":
-                cli3 = True
-            else:
-                cli3 = False
-
+        elif formulario =="form_client":
             clid = {
-                "nombre": cli1,
-                "email": cli2,
-                "activo": cli3,
-                "pedidos": cli4
+                "nombre": request.form.get("clien"),
+                "email": request.form.get("email"),
+                "activo": request.form.get("act") == "True",
+                "pedidos": int(request.form.get("pedidos"))
             }
-
             clientes.append(clid)
-        elif formulario=="pedidos":
-            ped1 = request.form.get("nombr")
-            ped2 = request.form.get("compra")
-            ped3 = request.form.get("dia")
-
+        elif formulario=="form_ped":
             pedid = {
-                "cliente": ped1,
-                "total": ped2,
-                "fecha": ped3
+                "cliente": request.form.get("nombr"),
+                "total": float(request.form.get("compra")),
+                "fecha": request.form.get("dia")
             }
-
             pedidos.append(pedid)
 
 
