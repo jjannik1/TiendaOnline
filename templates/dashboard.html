@@ -1,153 +1,190 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta name="descripcion" content="Pagina web de una tienda online">
-    <meta name="keywords" content="TecnoMarket">
     <meta charset="UTF-8">
-    <title>Dashboard</title>
-<style>
+    <title>{{ tienda }} - Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #f4f6f8;
+        }
 
-    h3 {
-        color: rgb(21, 117, 96);
-    }
+        header {
+            background-color: #1abc9c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
 
-    ul {
-        list-style:square;
+        nav {
+            background-color: #16a085;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+        }
 
-    }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
 
-    hr {
-  border: none;
-  height: 6px;
-  /* Set the hr color */
-  color: #333;  /* old IE */
-  background-color: #333;  /* Modern Browsers */
-}
+        nav a:hover {
+            text-decoration: underline;
+        }
 
+        main {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
 
-form {
-    margin: 1em 0;
-    padding: 1em;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-}
+        section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
 
-input, button {
-    margin: 0.3em;
-    padding: 0.4em;
-    border-radius: 4px;
-}
+        h3 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            color: #1abc9c;
+        }
 
+        ul {
+            padding-left: 20px;
+        }
 
-</style>
+        form input, form button {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #16a085;
+        }
+    </style>
 </head>
 <body>
+
+<header>
     <h1>Bienvenido, {{ nombre_admin }}!</h1>
     <h2>{{ tienda }} - {{ fecha }}</h2>
+</header>
 
-    <hr>
+<nav>
+    <a href="/">Inicio</a>
+    <a href="/productos">Productos</a>
+    <a href="/clientes">Clientes</a>
+    <a href="/pedidos">Pedidos</a>
+</nav>
 
-    <h3>Catálogo de Productos</h3>
+<main>
 
-    <ul>
-        {% for producto in productos %}
-            <li>
-                {{ producto.nombre }} - {{ producto.precio }}€ - {{ producto.categoria }} - 
-                {% if producto.stock == 0 %}
-                    <strong>Agotado</strong>
-                {% else %}
-                    {{ producto.stock }} unidades
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    <p><strong>Total en stock:</strong> {{ total_stock }}</p>
+{% if pagina == "indice" %}
+    <section>
+        <h3>Resumen</h3>
+        <p>Total productos en stock: <strong>{{ total_stock }}</strong></p>
+        <p>Total ingresos por pedidos: <strong>{{ total }}€</strong></p>
+        <p>Clientes activos: <strong>{{ clientes_activos }}</strong></p>
+        <p>Cliente con más pedidos: <strong>{{ cliente_pedido.nombre }}</strong> ({{ cliente_pedido.pedidos }} pedidos)</p>
+    </section> 
 
-    <hr>
+{% elif pagina == "productos" %}
+    <section>
+        <h3>Catálogo de Productos</h3>
+        <ul>
+            {% for producto in productos %}
+                <li>{{ producto.nombre }} - {{ producto.precio }}€ - {{ producto.categoria }} - 
+                    {% if producto.stock == 0 %}
+                        <span style="color: red;">Agotado</span>
+                    {% else %}
+                        {{ producto.stock }} unidades
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Total productos en stock: <strong>{{ total_stock }}</strong></p>
+        <h4>Agregar producto</h4>
+        <form method="POST">
+            <input type="hidden" name="tipo_formulario" value="form_prod">
+            <input type="text" name="product" placeholder="Nombre">
+            <input type="number" name="price" step="0.01" placeholder="Precio">
+            <input type="text" name="category" placeholder="Categoría">
+            <input type="number" name="stock" placeholder="Stock">
+            <button type="submit">Agregar</button>
+        </form>
+    </section>
 
-    <h3>Clientes</h3>
+{% elif pagina == "clientes" %}
+    <section>
+        <h3>Lista de Clientes</h3>
         <ul>
             {% for cliente in clientes %}
-                <li>
-                    {{ cliente.nombre }} ({{ cliente.email }}) -
+                <li>{{ cliente.nombre }} - {{ cliente.email }} - 
                     {% if cliente.activo %}
                         Activo
                     {% else %}
                         Inactivo
-                    {% endif %} - Pedidos: {{ cliente.pedidos }}
+                    {% endif %}
+                    - Pedidos: {{ cliente.pedidos }}
                 </li>
             {% endfor %}
         </ul>
+        <p>Clientes activos: <strong>{{ clientes_activos }}</strong></p>
+        <p>Cliente con más pedidos: <strong>{{ cliente_pedido.nombre }}</strong> ({{ cliente_pedido.pedidos }} pedidos)</p>
+        <h4>Agregar cliente</h4>
+        <form method="POST">
+            <input type="hidden" name="tipo_formulario" value="form_client">
+            <input type="text" name="clien" placeholder="Nombre">
+            <input type="email" name="email" placeholder="Correo">
+            <label><input type="radio" name="act" value="True"> Activo</label>
+            <label><input type="radio" name="act" value="False"> Inactivo</label>
+            <input type="number" name="pedidos" placeholder="Pedidos">
+            <button type="submit">Agregar</button>
+        </form>
+    </section>
 
-    <p><strong>Clientes activos:</strong> {{ clientes_activos }}</p>
-    <p><strong>Cliente con más pedidos:</strong> {{ cliente_pedido.nombre }} ({{ cliente_pedido.pedidos }} pedidos)</p>
+{% elif pagina == "pedidos" %}
+    <section>
+        <h3>Pedidos</h3>
+        <ul>
+            {% for pedido in pedidos %}
+                <li>{{ pedido.cliente }} - {{ pedido.total }}€ - {{ pedido.fecha }}</li>
+            {% endfor %}
+        </ul>
+        <p>Total ingresos por pedidos: <strong>{{ total }}€</strong></p>
+        <h4>Agregar pedido</h4>
+        <form method="POST">
+            <input type="hidden" name="tipo_formulario" value="form_ped">
+            <input type="text" name="nombr" placeholder="Cliente">
+            <input type="number" name="compra" step="0.01" placeholder="Total">
+            <input type="date" name="dia">
+            <button type="submit">Agregar</button>
+        </form>
+    </section>
+{% else %}
+    <section>
+        <h3>Página no encontrada</h3>
+        <p>La sección que buscas no existe.</p>
+    </section>
+{% endif %}
 
-
-    <hr>
-
-    <h3>Pedidos</h3>
-    <ul>
-        {% for pedido in pedidos %}
-            <li>{{ pedido.cliente }} - {{ pedido.total }}€ - {{ pedido.fecha }}</li>
-        {% endfor %}
-    </ul>
-    <p><strong>Total ingresado:</strong> {{ total }}€</p>
-
-    <hr>
-
-    <h3>Agregar productos</h3>
-
-    <form class="producto" method="POST">
-        <input type="hidden" name="tipo_formulario" value="form_prod">
-        <label for="prod" class="form_label">Producto: </label>
-            <input type="text" name="product" id="prod">
-        <label for="precio" class="form_label">Precio: </label>
-            <input type="number" name="price" step="0.01" id="precio">
-        <label for="categ" class="form_label">Categoria: </label>
-            <input type="text" name="category" id="categ">
-        <label for="sto" class="form_label">Stock: </label>
-            <input type="number" name="stock" id="sto">
-        <button type="submit" class="form_submit">Enviar</button>
-    </form>
-
-    <hr>
-
-    <h3>Agregar clientes</h3>
-
-    <form class="cliente" method="POST">
-        <input type="hidden" name="tipo_formulario" value="form_client">
-        <label for="nom_cli" class="form_label">Cliente: </label>
-            <input type="text" name="clien" id="nom_cli">
-        <label for="correo" class="form_label">Correo:</label>
-            <input type="email" name="email" id="correo">
-        <label for="activ" class="form_label">¿Como está?</label>
-            <input type="radio" name="act" id="activo" value="True"> Activo
-            <input type="radio" name="act" id="inactiv" value="False"> Inactivo
-        <label for="ped" class="form_label">Pedidos: </label>
-            <input type="number" name="pedidos" id="ped">
-        <button type="submit" class="form_submit">Enviar</button>
-
-    </form>
-
-    <hr>
-
-    <h3>Agregar pedidos</h3>
-
-    <form class="pedid" method="POST">
-        <input type="hidden" name="tipo_formulario" value="from_ped">
-        <label for="nombre_cliente" class="form_label">Cliente: </label>
-            <input type="text" name="nombr" id="nombre_cliente">
-        <label for="tot" class="form_label">Total: </label>
-            <input type="number" name="compra" id="tot" step="0.01">
-        <label for="fech" class="form_label">Fecha:</label>
-            <input type="date" name="dia" id="fech">
-        <button type="submit" class="form_submit">Enviar</button>
-
-    </form>
-
-
-
+</main>
 
 </body>
 </html>
