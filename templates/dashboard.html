@@ -43,6 +43,7 @@ input, button {
 </style>
 </head>
 <body>
+    
     <h1>Bienvenido, {{ nombre_admin }}!</h1>
     <h2>{{ tienda }} - {{ fecha }}</h2>
 
@@ -135,7 +136,7 @@ input, button {
     <h3>Agregar pedidos</h3>
 
     <form class="pedid" method="POST">
-        <input type="hidden" name="tipo_formulario" value="from_ped">
+        <input type="hidden" name="tipo_formulario" value="form_ped">
         <label for="nombre_cliente" class="form_label">Cliente: </label>
             <input type="text" name="nombr" id="nombre_cliente">
         <label for="tot" class="form_label">Total: </label>

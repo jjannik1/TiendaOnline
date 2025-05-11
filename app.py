@@ -1,24 +1,13 @@
 from flask import Flask, render_template, request
+from pymongo import MongoClient
 from datetime import date
 
 app = Flask(__name__)
 
-productos = [
-        {"nombre": "Portátil Lenovo", "precio": 750.00, "stock": 5, "categoria": "Computadoras"},
-        {"nombre": "Ratón Logitech", "precio": 25.50, "stock": 0, "categoria": "Accesorios"},
-        {"nombre": "Monitor Samsung", "precio": 199.99, "stock": 3, "categoria": "Pantallas"},
-        {"nombre": "Teclado Mecánico", "precio": 45.00, "stock": 10, "categoria": "Accesorios"}
-    ]
-clientes = [
-        {"nombre": "Ana Torres", "email": "ana@correo.com", "activo": True, "pedidos": 3},
-        {"nombre": "Luis Rivas", "email": "luis@correo.com", "activo": False, "pedidos": 1},
-        {"nombre": "Marta López", "email": "marta@correo.com", "activo": True, "pedidos": 5}
-    ]
-pedidos = [
-        {"cliente": "Ana Torres", "total": 120.00, "fecha": "2025-05-01"},
-        {"cliente": "Marta López", "total": 340.50, "fecha": "2025-05-03"},
-        {"cliente": "Luis Rivas", "total": 75.00, "fecha": "2025-05-04"}
-    ]
+online = MongoClient("mongodb+srv://jjen527:9wv0F9F00KrexmAU@jjannik.aliwych.mongodb.net/")
+
+app.db = online.tienda
+
 
 
 @app.route('/dashboard', methods = ["GET", "POST"])
@@ -28,12 +17,17 @@ def dashboard():
     tienda = "TecnoMarket"
     fecha = date.today()
 
+    productos = [producto for producto in app.db.productos.find({})]
+    clientes = [cliente for cliente in app.db.clientes.find({})]
+    pedidos = [pedido for pedido in app.db.pedidos.find({})]
+
 
     clid = {}
     prod={}
     pedid = {}
     if request.method == "POST":
         formulario = request.form.get("tipo_formulario")
+
         if formulario == "form_prod":
             prod = {
                 "nombre": request.form.get("product"),
@@ -42,6 +36,8 @@ def dashboard():
                 "categoria": request.form.get("category")
             }
             productos.append(prod)
+            app.db.productos.insert_one(prod)
+
         elif formulario =="form_client":
             clid = {
                 "nombre": request.form.get("clien"),
@@ -50,6 +46,8 @@ def dashboard():
                 "pedidos": int(request.form.get("pedidos"))
             }
             clientes.append(clid)
+            app.db.clientes.insert_one(clid)
+
         elif formulario=="form_ped":
             pedid = {
                 "cliente": request.form.get("nombr"),
@@ -57,6 +55,8 @@ def dashboard():
                 "fecha": request.form.get("dia")
             }
             pedidos.append(pedid)
+            app.db.pedidos.insert_one(pedid)
+
 
 
     total_stock = 0
@@ -78,7 +78,7 @@ def dashboard():
     for pedido in pedidos:
         total += pedido["total"]
 
-    return render_template("dashboard.html",nombre_admin=nombre_admin,tienda=tienda,fecha=fecha,productos=productos,clientes=clientes,pedidos=pedidos,total_stock=total_stock,clientes_activos=clientes_activos,cliente_pedido=cliente_pedido,total=total)
+    return render_template("dashboard.html",nombre_admin=nombre_admin,tienda=tienda,fecha=fecha,productos=productos,clientes=clientes,pedidos=pedidos,total=total,cliente_pedido=cliente_pedido,clientes_activos=clientes_activos,total_stock=total_stock)
 
 
 if __name__ == '__main__':
