@@ -22,10 +22,14 @@ pip install -r requirements.txt
 En la carpeta del proyecto ejecutamos la aplicación.
 
 ```bash
-python app.py
+python3 app.py
 ```
 Y entrar en la pagina web de su host localmente desde:
 
 ```bash
  http://127.0.0.1:5000/
 ```
+
+## Uso
+
+En el indice de la pagina se puede ver un resumen de los productos, clientes y pedidos. Con la barra de navegacion se puede navegar por los diferentes apartados para poder añadir o eliminar objetos de la base de datos.
