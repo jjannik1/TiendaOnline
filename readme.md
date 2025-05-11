@@ -1,6 +1,6 @@
 # Panel de Gestión de Tienda Online - TecnoMarket
 
-Esta aplicacion te permite ver los productos, clientes y pedidos que hay en la Tienda TecnoMarket
+Esta aplicacion te permite ver y agregar productos, clientes y pedidos que hay en la Tienda TecnoMarket
 
 ## Requisitos
 
@@ -27,5 +27,5 @@ python app.py
 Y entrar en la pagina web de su host localmente desde:
 
 ```bash
- http://127.0.0.1:5000/dashboard
+ http://127.0.0.1:5000/
 ```
