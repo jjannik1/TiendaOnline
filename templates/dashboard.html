@@ -128,6 +128,22 @@
             <input type="number" name="stock" placeholder="Stock">
             <button type="submit">Agregar</button>
         </form>
+        <h4>Eliminar producto</h4>
+        <form method="POST">
+                <input type="hidden" name="tipo_formulario" value="elim_prod">
+                <input type="text" name="elproduct" placeholder="Nombre">
+                <button type="submit">Eliminar</button>
+        </form>
+        <h4>Cambiar precio o stock</h4>
+        <form method="POST">
+            <input type="hidden" name="tipo_formulario" value="cambio_stock">
+            <input type="text" name="prod_a_cambiar" placeholder="Nombre del producto" required>
+            <input type="number" name="nuevo_precio" step="0.01" placeholder="Nuevo precio (opcional)">
+            <input type="number" name="nuevo_stock" placeholder="Nuevo stock (opcional)">
+            <button type="submit">Actualizar</button>
+        </form>
+
+
     </section>
 
 {% elif pagina == "clientes" %}
@@ -157,6 +173,12 @@
             <input type="number" name="pedidos" placeholder="Pedidos">
             <button type="submit">Agregar</button>
         </form>
+        <h4>Eliminar Cliente</h4>
+        <form method="POST">
+        <input type="hidden" name="tipo_formulario" value="elim_client">
+        <input type="text" name="elcliente" placeholder="Nombre">
+        <button type="submit">Eliminar</button>
+        </form>
     </section>
 
 {% elif pagina == "pedidos" %}
@@ -175,6 +197,12 @@
             <input type="number" name="compra" step="0.01" placeholder="Total">
             <input type="date" name="dia">
             <button type="submit">Agregar</button>
+        </form>
+        <h4>Eliminar Pedido</h4>
+        <form method="POST">
+        <input type="hidden" name="tipo_formulario" value="elim_ped">
+        <input type="text" name="elpedido" placeholder="Nombre">
+        <button type="submit">Eliminar</button>
         </form>
     </section>
 {% else %}
