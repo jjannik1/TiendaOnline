@@ -4,7 +4,7 @@ from datetime import date
 
 app = Flask(__name__)
 
-online = MongoClient("mongodb+srv://jjen527:9wv0F9F00KrexmAU@jjannik.aliwych.mongodb.net/")
+online = MongoClient("mongodb+srv://jjen527:35OpRHzih8l1N14m@jjannik.aliwych.mongodb.net/")
 
 app.db = online.tienda
 
